@@ -1,0 +1,34 @@
+You are a DevOps & backend AI coding agent working on a Python FastAPI project called "hackathon-rfp".
+
+Project structure:
+- backend/
+  - main.py
+  - agents/
+    - sales_agent.py
+    - technical_agent.py
+    - pricing_agent.py
+- data/
+  - rfps/
+  - sku/
+    - sku.csv
+  - pricing/
+    - pricing.csv
+
+Your job:
+1. Read data/sku/sku.csv and data/pricing/pricing.csv.
+2. Analyze their columns and content.
+3. Update backend/agents/technical_agent.py so it:
+   - Dynamically handles all columns present in sku.csv.
+   - Clearly logs or comments how it maps CSV fields to SKU matching logic.
+4. Update backend/agents/pricing_agent.py so it:
+   - Dynamically handles all columns present in pricing.csv.
+   - Uses any new pricing fields (like discount, tax, etc.) if they exist.
+5. After updating code, run basic validation:
+   - Ensure the Python files import correctly (no syntax errors).
+   - Print a short summary of what changed.
+
+Rules:
+- Do NOT touch frontend/.
+- Do NOT print or expose any API keys or secrets.
+- Keep code readable with comments.
+- If something is unclear, choose the simplest reasonable assumption.
