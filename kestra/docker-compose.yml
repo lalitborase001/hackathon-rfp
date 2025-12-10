@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  kestra:
+    image: kestra/kestra:latest
+    command: server standalone
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./flows:/app/flows
+      - ./scripts:/app/scripts

@@ -1,0 +1,4 @@
+sku_id,cores,area_sqmm,insulation,material,voltage
+XLPE-240-AL-3.5C,3.5,240,XLPE,Aluminium,1.1kV
+XLPE-16-CU-4C,4,16,XLPE,Copper,1.1kV
+PVC-12C-2.5CU,12,2.5,PVC,Copper,1.1kV

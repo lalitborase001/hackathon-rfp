@@ -1,0 +1,5 @@
+RFP ID: 2025-001
+Title: Supply of Electrical Cables
+Due Date: 2025-12-31
+Scope of Supply: The supplier shall provide electrical cables that meet the specified requirements.
+Testing Requirements: The supplier shall conduct tests to ensure the cables meet the required standards.
