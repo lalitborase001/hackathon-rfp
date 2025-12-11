@@ -1,7 +1,0 @@
-id: hello_world
-namespace: hackathon
-
-tasks:
-  - id: test_message
-    type: io.kestra.core.tasks.log.Log
-    message: "Kestra is running for the Asian Paints Hackathon!"
