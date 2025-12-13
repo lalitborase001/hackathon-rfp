@@ -1,11 +1,10 @@
-version: "3.8"
 services:
   kestra:
     image: kestra/kestra:latest
     container_name: kestra
     restart: unless-stopped
     ports:
-      - "8080:8080"   # UI/API
+      - "8080:8080"
     environment:
       - KESTRA_JAVA_OPTS=-Xmx1024m
     volumes:
