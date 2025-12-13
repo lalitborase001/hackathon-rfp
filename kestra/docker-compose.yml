@@ -3,9 +3,23 @@ services:
     image: kestra/kestra:latest
     container_name: kestra
     restart: unless-stopped
+    command: server standalone
     ports:
       - "8080:8080"
     environment:
-      - KESTRA_JAVA_OPTS=-Xmx1024m
+      KESTRA_CONFIGURATION: |
+        kestra:
+          repository:
+            type: memory
+          storage:
+            type: local
+            local:
+              base-path: /data/kestra
+          queue:
+            type: memory
+          tasks:
+            tmp-dir:
+              path: /tmp/kestra
+      JAVA_OPTS: "-Xms512m -Xmx1024m"
     volumes:
       - ./storage:/data/kestra
