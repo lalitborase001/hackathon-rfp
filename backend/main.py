@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from agents.sales_agent import SalesAgent
 from agents.technical_agent import TechnicalAgent
 from agents.pricing_agent import PricingAgent
+from agents.oumi_judge_agent import OumiJudgeAgent
 
 
 
@@ -13,13 +14,16 @@ origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 
 @app.get("/health")
@@ -142,20 +146,22 @@ def pricing_run():
 def full_rfp_run():
     """
     Orchestrator endpoint:
-    Runs Sales, Technical, and Pricing agents on the first available RFP.
+    Runs Sales, Technical, Oumi Judge, and Pricing agents.
     """
     # 1) Init agents
     try:
         sales_agent = SalesAgent()
         technical_agent = TechnicalAgent()
         pricing_agent = PricingAgent()
+        oumi_judge_agent = OumiJudgeAgent()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to initialize agents: {e}")
 
-    # 2) Find RFP file
+    # 2) Find RFP file (earliest due handled inside SalesAgent if implemented)
     rfps = sales_agent.list_available_rfps()
     if not rfps:
         raise HTTPException(status_code=404, detail="No RFP files found in data/rfps")
+
     rfp_file = rfps[0]
 
     # 3) Read RFP text
@@ -165,25 +171,31 @@ def full_rfp_run():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error reading RFP file: {e}")
 
-    # 4) Run Sales Agent (summary)
+    # 4) Sales Agent (summary)
     try:
         sales_info = sales_agent.summarize_rfp(rfp_file)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error in SalesAgent: {e}")
 
-    # 5) Run Technical Agent (spec matching)
+    # 5) Technical Agent (spec matching)
     try:
         technical_result = technical_agent.match_specs(rfp_text)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error in TechnicalAgent: {e}")
 
-    # 6) Run Pricing Agent (pricing on top of technical result)
+    # 6) 🧠 OUMI JUDGE AGENT (Evaluation / Reward Signal)
+    try:
+        oumi_judgement = oumi_judge_agent.evaluate_technical_output(technical_result)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error in OumiJudgeAgent: {e}")
+
+    # 7) Pricing Agent
     try:
         pricing_result = pricing_agent.price_from_technical_result(technical_result)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error in PricingAgent: {e}")
 
-    # 7) Return combined response
+    # 8) Final orchestrated response
     return {
         "rfp_file": rfp_file,
         "sales_summary": {
@@ -193,6 +205,8 @@ def full_rfp_run():
             "scope_summary": sales_info.scope_summary,
         },
         "technical": technical_result,
+        "oumi_judgement": oumi_judgement,
         "pricing": pricing_result,
     }
+
 
