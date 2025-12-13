@@ -1,8 +1,14 @@
-## Cline Dev Agent
+## Agentic AI Architecture
 
-Run the Dev Agent (via GitHub Action or locally in Codespaces/WSL):
+This project demonstrates a multi-agent AI workflow for RFP analysis:
 
-- Trigger via GitHub Actions: Actions → Run Cline Dev Agent
-- Or run locally (Codespaces/WSL/Docker): `./run_dev_agent.sh`
+- Sales Agent: Identifies and summarizes RFPs
+- Technical Agent: Matches RFP specs with OEM SKUs
+- Pricing Agent: Calculates material and testing costs
+- Orchestrator: Coordinates agents into a single workflow
 
-Cline reads `dev_agent_prompt.txt` and updates backend agent code to match sku/pricing CSV schema.
+Tools Used:
+- FastAPI (Backend)
+- Next.js (Frontend)
+- Kestra (Workflow Orchestration)
+- Groq LLM
