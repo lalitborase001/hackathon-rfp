@@ -1,3 +1,5 @@
-sku,name,unit_price
-CAB-001,Electrical Cable Standard,500
-TEST-001,Cable Testing Service,2000
+sku_id,cores,area_sqmm,insulation,material,voltage
+CAB-001,3,1.5,XLPE,Copper,1kV
+CAB-002,4,2.5,PVC,Copper,1.1kV
+CAB-003,2,1.0,XLPE,Aluminium,1kV
+CAB-004,3,2.5,XLPE,Copper,1.1kV

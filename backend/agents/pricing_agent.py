@@ -76,38 +76,40 @@ class PricingAgent:
         }
 
     def price_from_technical_result(self, technical_result: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Given the JSON result from TechnicalAgent.match_specs,
-        compute pricing for the best SKU of each item.
-        """
         items = technical_result.get("items", [])
         priced_items: List[Dict[str, Any]] = []
+        grand_total = 0.0
 
         for item in items:
             rfp_item = item.get("rfp_item", "")
             top_matches = item.get("top_matches", [])
 
             if not top_matches:
-                priced_items.append(
-                    {
-                        "rfp_item": rfp_item,
-                        "pricing": None,
-                        "message": "No SKU match, cannot price",
-                    }
-                )
+                priced_items.append({
+                    "rfp_item": rfp_item,
+                    "best_match_sku": "-",
+                    "match_score": "-",
+                    "pricing": None,
+                })
                 continue
 
             best = top_matches[0]
             sku_id = best.get("sku_id", "")
             pricing_info = self.price_item(sku_id, quantity=1.0)
 
-            priced_items.append(
-                {
-                    "rfp_item": rfp_item,
-                    "best_match_sku": sku_id,
-                    "match_score": best.get("score", 0),
-                    "pricing": pricing_info,
-                }
-            )
+            if pricing_info.get("found"):
+                grand_total += pricing_info["total_cost"]
 
-        return {"priced_items": priced_items}
+            priced_items.append({
+                "rfp_item": rfp_item,
+                "best_match_sku": sku_id,
+                "match_score": best.get("score", 0),
+                "pricing": pricing_info,
+            })
+
+        return {
+            "priced_items": priced_items,
+            "grand_total": grand_total,
+            "currency": "INR"
+        }
+

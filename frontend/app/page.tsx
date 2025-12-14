@@ -162,12 +162,11 @@ export default function Home() {
             </table>
 
             {/* GRAND TOTAL */}
-            <div className="mt-4 text-lg font-bold text-right">
-              Grand Total:{" "}
-              {data?.pricing?.total_cost
-                ? `₹${data.pricing.total_cost}`
-                : "-"}
+            {data.pricing?.grand_total !== undefined && (
+              <div className="text-right mt-4 text-lg font-bold text-black">
+                Grand Total: ₹{data.pricing.grand_total}
             </div>
+            )}
             
           </section>
           

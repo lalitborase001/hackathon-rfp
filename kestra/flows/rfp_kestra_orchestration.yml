@@ -1,0 +1,31 @@
+id: rfp_kestra_orchestration
+namespace: hackathon.ai
+
+inputs:
+  - id: backend_url
+    type: STRING
+    defaults: "http://host.docker.internal:8000"
+
+tasks:
+  # 1️⃣ Fetch AI Agent Output
+  - id: fetch_rfp_analysis
+    type: io.kestra.plugin.core.http.Request
+    uri: "{{ inputs.backend_url }}/rfp/full-run"
+    method: GET
+
+  # 2️⃣ Log backend response
+  - id: log_response
+    type: io.kestra.plugin.core.log.Log
+    message: |
+      Backend Response:
+      {{ outputs.fetch_rfp_analysis.body }}
+
+  - id: final_decision_log
+    type: io.kestra.plugin.core.log.Log
+    message: |
+      FINAL DECISION LOGIC:
+      Total Cost = {{ outputs.fetch_rfp_analysis.body | jq('.pricing.grand_total') }}
+
+      If Total Cost < 1500000 → GO
+      Else → NO-GO
+

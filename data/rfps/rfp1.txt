@@ -3,7 +3,9 @@ Title: Supply of Electrical Cables
 Due Date: 31-Dec-2025
 
 Scope of Supply:
-The supplier shall provide electrical cables that meet the specified requirements.
+- 3 core 1.5 sqmm copper XLPE insulated cable rated for 1kV
+- 4 core 2.5 sqmm copper PVC insulated cable rated for 1.1kV
 
 Testing Requirements:
-The supplier shall conduct tests to ensure the cables meet the required standards.
+- High voltage insulation test
+- Conductor resistance test
