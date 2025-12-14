@@ -1,0 +1,11 @@
+RFP ID: 2025-002
+Title: Supply of Industrial Power Cables
+Due Date: 15-Jan-2026
+
+Scope of Supply:
+- 3 core 2.5 sqmm copper XLPE insulated cable rated for 1.1kV
+- 4 core 4.0 sqmm copper PVC insulated cable rated for 1.1kV
+
+Testing Requirements:
+- Routine electrical tests
+- Insulation resistance test

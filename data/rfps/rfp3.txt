@@ -1,0 +1,11 @@
+RFP ID: 2025-003
+Title: Supply of Control Cables
+Due Date: 05-Feb-2026
+
+Scope of Supply:
+- 2 core 1.0 sqmm copper XLPE insulated cable rated for 1kV
+- 3 core 1.5 sqmm aluminium insulated cable rated for 1kV
+
+Testing Requirements:
+- High voltage test
+- Continuity test
